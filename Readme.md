@@ -5,7 +5,7 @@
 	- both key and pem file to locations specified in the nginx-conf image.
 		- create symlinks as specified in the image
 		- you can rename the links in /etc/nginx, however you have to include new names in evolitve.conf
-- Install uWSGI: pip install uwsgi
+- Install uWSGI: `pip install uwsgi`
 - Install MariaDB (MySQL) drivers for Django:
 	- `sudo-apt get install libmariadbclient-dev`
 	- `pip install django mysqlclient`
