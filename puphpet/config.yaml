@@ -48,7 +48,7 @@ vagrantfile:
                 group: www-data
                 source: ./shared
                 target: /var/www/evolitve
-                sync_type: nfs
+                sync_type: default
                 smb:
                     smb_host: ''
                     smb_username: ''
