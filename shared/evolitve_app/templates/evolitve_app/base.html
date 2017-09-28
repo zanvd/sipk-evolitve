@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{% block title %}Evolitve{% endblock %}</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'evolitve_app/style.css' %}" />
+    </head>
+    <body>
+        <header class="page-header">
+            <h1>Evolitve <small>ŠIPK projekt</small></h1>
+        </header>
+        <main>
+        {% block content %}
+        {% if question_list %}
+            <section class="container-fluid">
+                <h1>Odprte volitve</h1>
+                <br />
+            {% for question in question_list.open %}
+                <article class="col-md-9">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                <a href="{% url 'evolitve_app:question' question.id %}">{{ question }} <span class="glyphicon glyphicon-link"></span></a>
+                            </h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="col-md-3">
+                                <p>
+                                    <strong>Pričetek:</strong><em> {{ question.start_date }}</em>
+                                </p>
+                                <p>
+                                    <strong>Zaključek:</strong><em> {{ question.close_date }}</em>
+                                </p>
+                            </div>
+                            <div class="col-md-6">
+                                <ul>
+                                {% for answer in question.answer_set.all %}
+                                    <li>
+                                        <strong>{{ answer }}</strong>
+                                    </li>
+                                {% endfor %}
+                                </ul>
+                            </div>
+                            <div class="col-md-3">
+                                <p>
+                                    Število odgovorov: <span class="badge">{{ question.get_total_answered }}</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+                {% if forloop.first %}
+                    <article class="col-md-3">
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">Informacije <span class="glyphicon glyphicon-info-sign pull-right"></span></h4>
+                            </div>
+                            <div class="panel-body">
+                                Za dostop do volitev pritisnite na vprašanje.
+                            </div>
+                        </div>
+                    </article>
+                {% endif %}
+            {% endfor %}
+            </section>
+            <section class="container-fluid">
+                <hr />
+                <h1>Končane volitve</h1>
+                <br />
+            {% for question in question_list.closed %}
+                <article class="col-md-9">
+                    <div class="panel panel-success">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">{{ question }}</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="col-md-3">
+                                <p>
+                                    <strong>Pričetek:</strong><em> {{ question.start_date }}</em>
+                                </p>
+                                <p>
+                                    <strong>Zaključek:</strong><em> {{ question.close_date }}</em>
+                                </p>
+                            </div>
+                            <div class="col-md-6">
+                                {% for answer in question.answer_set.all %}
+                                    <p {% if answer.high == 1 %}class="highest-answer"{% endif %}>
+                                        <strong>{{ answer }}:</strong> {{ answer.votes }}
+                                    </p>
+                                {% endfor %}
+                            </div>
+                            <div class="col-md-3">
+                                <p>
+                                    Število odgovorov: <span class="badge">{{ question.get_total_answered }}</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            {% endfor %}
+            </section>
+        {% else %}
+                <section id="no-question-sign" class="vertical-center">
+                    <div class="col-md-3 center-block no-float">
+                        <p class="alert alert-info text-center" role="alert">
+                            <strong>Trenutno ni nobenih volitev.</strong>
+                            <span class="glyphicon glyphicon-info-sign pull-right"></span>
+                        </p>
+                    </div>
+                </section>
+        {% endif %}
+        {% endblock content %}
+        </main>
+        <footer>
+            <hr />
+            <p>
+                &copy; {% now "Y" %} Vse pravice pridržane.
+            </p>
+        </footer>
+    </body>
+</html>

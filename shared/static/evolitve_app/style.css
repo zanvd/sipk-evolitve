@@ -1,0 +1,80 @@
+* {
+    margin: 0;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 70px;
+}
+
+header {
+    margin-top: 0px !important;
+    padding: 25px;
+    background-color: black;
+    color: ghostwhite;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    height: 70px;
+    width: 100%;
+    text-align: center;
+    background-color: #293d3d;
+    color: white;
+}
+footer > hr {
+    margin: 0 0 20px 0;
+}
+
+input[type=radio] {
+    display: none;
+}
+
+input[type=radio] + label::before {
+    content: '';
+    display: inline-block;
+    border: 1px solid #000000;
+    border-radius: 50%;
+    margin: 0 7px;
+    cursor: pointer;
+}
+
+input[type=radio]:checked + label::before {
+    background: green;
+    background: -moz-radial-gradient(circle, green, lightgreen, #ffffff);
+    background: -o-radial-gradient(circle, green, lightgreen, #ffffff);
+    background: -webkit-radial-gradient(circle, green, lightgreen, #ffffff);
+    background: radial-gradient(circle, green, lightgreen, #ffffff);
+}
+
+.no-float {
+    float: none;
+}
+
+.font-size-18 {
+    font-size: 18px;
+}
+
+.vertical-center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.radio-btn-lg + label::before {
+    width: 25px;
+    height: 25px;
+}
+
+.highest-answer {
+    border: 1px solid red;
+}
+
+#no-question-sign {
+    height: 100%;
+}

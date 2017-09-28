@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Evolitve - Rezultati: {{ question.question_text }}</title>
+    </head>
+    <body>
+        <h1>{{ question.question_text }}</h1>
+        <ul>
+        {% for answer in question.answer_set.all %}
+            <li>{{ answer.answer_text }}: {{ answer.votes }}</li>
+        {% endfor %}
+        </ul>
+    </body>
+</html>

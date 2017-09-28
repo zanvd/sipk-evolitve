@@ -1,0 +1,51 @@
+{% extends "evolitve_app/base.html" %}
+
+{% block content %}
+    <section class="container">
+        <article class="row text-center">
+            <h1>{{ question }}</h1>
+        </article>
+        <article class="row">
+        {% if error_message %}
+            <div class="row">
+                <div class="col-md-3 center-block no-float">
+                    <p class="alert alert-danger text-center">
+                        <strong>{{ error_message }}</strong>
+                        <span class="glyphicon glyphicon-remove pull-right"></span>
+                    </p>
+                </div>
+            </div>
+        {% endif %}
+            <form action="{% url 'evolitve_app:vote' question.id %}" method="post" class="well form-horizontal">
+                {% csrf_token %}
+                <ul class="list-group">
+                {% for answer in question.answer_set.all %}
+                    <li class="list-group-item">
+                        <div class="form-group">
+                            <input type="radio" name="answer" id="answer{{ forloop.counter }}" class="radio-btn-lg" value="{{ answer.id }}" />
+                            <label for="answer{{ forloop.counter }}" class="font-size-18">{{ answer }}</label>
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+                </ul>
+                <div class="form-group">
+                    <label for="uuid" class="col-sm-2 control-label input-lg">ID volivca:</label>
+                    <div class="col-sm-10">
+                        <input type="text" name="uuid" id="uuid" class="form-control input-lg" {% if uuid %}value="{{ uuid }}" {% endif %} placeholder="ID volivca" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="emso" class="col-sm-2 control-label input-lg">EMŠO volivca:</label>
+                    <div class="col-sm-10">
+                        <input type="text" name="emso" id="emso" class="form-control input-lg" {% if emso %}value="{{ emso }}" {% endif %} placeholder="EMŠO volivca" required />
+                    </div>
+                </div>
+                <div class="form-group text-center">
+                    <button type="submit" class="btn btn-success">Glasuj <span class="glyphicon glyphicon-ok"></span></button>
+                    <a href="/" class="btn btn-link pull-right"><strong>Prekliči</strong></a>
+                </div>
+            </form>
+        </article>
+    </section>
+{% endblock content %}
